@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: customer-corner-job-file-processing
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
+    username: MYAPP
+    password: password
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+
+server:
+  port: 9090
+  error:
+    include-message: always
+
+logging:
+  level:
+    org.springframework.web: INFO
+    org.springframework.data.repository.config: DEBUG
+    root: INFO
+    org.hibernate: ERROR
+  file:
+    name: logs/job-file-processing.log
+
+ldap:
+#  urls: ldap://192.168.172.156:389
+  urls: ldap://192.168.234.4:389
+  base: DC=hq,DC=devbni,DC=local
+  baseDn: OU=BNI Users
+  username: serviceaccounthq
+  password: bni1234/
+  attribute:
+    accountId: sAMAccountName
+    cn: cn
+    distinguishedName: distinguishedName
+    statusAcc: userAccountControl
+    role: newprepaidrole
+    firstName: givenName
+    lastName: sn
+    name: name
+    mail: mail
+    branchCode: physicalDeliveryOfficeName
+
+app:
+  config:
+    session: 1
+  files:
+    batch:
+      limit: 300
+    parent:
+      dir: D:\\WORK-ARIEF\\PROJECT_CHUBB\\TESTING\\EMPTY
+    pattern: .pdf
